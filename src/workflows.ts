@@ -105,6 +105,7 @@ export async function changeEmailWorkflow(userId: number) {
   while(true){
       await condition(() => currentEmail !== "");
      await sleep(5000);
-     return await processUserData(userId,currentEmail);
+      await processUserData(userId,currentEmail);
+      currentEmail = ""
    }
   }
