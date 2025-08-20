@@ -4,13 +4,11 @@ import { User } from './models/User';
 export async function getUserById(id: number) {
   const user = await User.findByPk(id);
   if (!user) {
-    // throw new Error(`User with id ${id} not found`);
         throw ApplicationFailure.nonRetryable(
           `User with id ${id} not found`,
          'NotFoundError'
     );
   }
-  // Return plain JSON object
   return user.toJSON();
 }
 
@@ -24,3 +22,12 @@ export async function getUser() {
   const user = await User.findAll();
   return user
 }
+
+
+export async function processUserData(userId: number, email: string) {
+    const user = await User.findByPk(userId);
+    if (user) {
+       await user.update({ email });
+    }
+    return user?.toJSON();
+  }
